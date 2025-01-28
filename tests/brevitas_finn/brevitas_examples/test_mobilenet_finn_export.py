@@ -24,7 +24,7 @@ ort_mac_fail = pytest.mark.skipif(
     reason='Issue with ORT and MobileNet export on MacOS on PyTorch >= 1.5.0')
 
 INPUT_SIZE = (1, 3, 224, 224)
-ATOL = 7  # How many bitflips to tolerate in the 32-bit output
+ATOL = 1e-3  # How many bitflips to tolerate in the 32-bit output
 RTOL = 1e-2
 SEED = 0
 

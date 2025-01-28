@@ -241,7 +241,7 @@ class TruncIntQuant(brevitas.jit.ScriptModule):
             signed: Union[bool, Tensor]) -> Tuple[Tensor, Tensor, Tensor, Tensor]:
         y = x / scale
         y = y + zero_point
-        y = round_ste(y)  # clean up floating point error
+        #y = round_ste(y)  # clean up floating point error
         output_bit_width = self.msb_clamp_bit_width_impl()
         trunc_scale = self.trunc_scaling_impl(y, input_bit_width, output_bit_width, signed)
         y = y / trunc_scale
