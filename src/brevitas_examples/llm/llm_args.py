@@ -63,7 +63,7 @@ def create_args_parser() -> ArgumentParser:
         '--weight-scale-precision',
         type=str,
         default='float_scale',
-        choices=['float_scale', 'po2_scale'],
+        choices=['float_scale', 'float_sparse_scale', 'po2_scale'],
         help='Whether scale is a float value or a po2. Default: po2.')
     parser.add_argument(
         '--weight-quant-rescaling-init',

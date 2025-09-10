@@ -213,3 +213,19 @@ class FP8e4m3FNUZDynamicActPerRowFloat(Fp8e4m3FNUZActPerTensorFloat):
     scaling_stats_op = 'min_max'
     scaling_per_output_channel = True
     proxy_class = DynamicActFloatQuantProxyFromInjector
+
+def sparse_ste(x, sparse_ratio):
+    pass
+
+class SparseRoundSte(torch.nn.Module):
+    def __init__(self, sparse_ratio):
+        self.sparse_ratio = sparse_ratio
+        super().__init__()
+
+    def forward(self, x):
+        # Sparse logic here
+        return round_ste(x)
+
+class Int8WeightPerChannelFloatSparse(Int8WeightPerChannelFloat):
+    float_to_int_impl = SparseRoundSte
+    sparse_ratio = 0.5
