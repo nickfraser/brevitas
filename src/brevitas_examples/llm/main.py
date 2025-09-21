@@ -238,7 +238,7 @@ def quantize_llm(args, extra_args=None):
         tokenizer=tokenizer,
         nsamples=args.nsamples,
         seqlen=args.seqlen,
-        split="validation",
+        split=args.dataset_eval_split,
         seed=args.seed,
         require_fx=require_fx and args.export_target is not None,
         device=None)
@@ -249,6 +249,7 @@ def quantize_llm(args, extra_args=None):
         # Load the data for rotation optimization
         rot_calibration_loader = get_dataset_for_model(
             args.model,
+            bos_preprocessing=args.bos_preprocessing,
             dataset_name=args.dataset,
             tokenizer=tokenizer,
             nsamples=args.nsamples_rot_calibration,
