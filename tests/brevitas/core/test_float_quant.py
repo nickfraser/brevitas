@@ -31,7 +31,9 @@ class BitwidthWrapper(torch.nn.Module):
 
     def __init__(self, value):
         super().__init__()
-        self.value = torch.tensor(value)
+        # We need to cast the bitwidth to a float to ensure correct computation
+        # This is also done throughout the codebase
+        self.value = torch.tensor(float(value))
 
     def forward(self):
         return self.value
@@ -69,7 +71,7 @@ def test_float_quant_defaults(minifloat_format):
                 exponent_bit_width_impl=exponent_bit_width_impl,
                 mantissa_bit_width_impl=mantissa_bit_width_impl,
                 exponent_bias_impl=exponent_bias_impl,
-                pre_computed_max_mantissa=ComputeMaxMantissa(),
+                compute_max_mantissa=ComputeMaxMantissa(),
                 signed=signed,
                 input_view_impl=Identity(),
                 float_clamp_impl=None)
@@ -87,7 +89,7 @@ def test_float_quant_defaults(minifloat_format):
             exponent_bit_width_impl=exponent_bit_width_impl,
             mantissa_bit_width_impl=mantissa_bit_width_impl,
             exponent_bias_impl=exponent_bias_impl,
-            pre_computed_max_mantissa=ComputeMaxMantissa(),
+            compute_max_mantissa=ComputeMaxMantissa(),
             input_view_impl=Identity(),
             signed=signed,
             float_clamp_impl=float_clamp)
@@ -116,7 +118,7 @@ def test_float_to_quant_float(inp, minifloat_format):
                 exponent_bit_width_impl=exponent_bit_width_impl,
                 mantissa_bit_width_impl=mantissa_bit_width_impl,
                 exponent_bias_impl=exponent_bias_impl,
-                pre_computed_max_mantissa=ComputeMaxMantissa(),
+                compute_max_mantissa=ComputeMaxMantissa(),
                 input_view_impl=Identity(),
                 signed=signed,
                 float_clamp_impl=None)
@@ -134,7 +136,7 @@ def test_float_to_quant_float(inp, minifloat_format):
             exponent_bit_width_impl=exponent_bit_width_impl,
             mantissa_bit_width_impl=mantissa_bit_width_impl,
             exponent_bias_impl=exponent_bias_impl,
-            pre_computed_max_mantissa=ComputeMaxMantissa(),
+            compute_max_mantissa=ComputeMaxMantissa(),
             input_view_impl=Identity(),
             signed=signed,
             float_clamp_impl=float_clamp)
@@ -169,7 +171,7 @@ def test_scaling_impls_called_once(inp, minifloat_format):
                 exponent_bit_width_impl=exponent_bit_width_impl,
                 mantissa_bit_width_impl=mantissa_bit_width_impl,
                 exponent_bias_impl=exponent_bias_impl,
-                pre_computed_max_mantissa=ComputeMaxMantissa(),
+                compute_max_mantissa=ComputeMaxMantissa(),
                 signed=signed,
                 input_view_impl=Identity(),
                 scaling_impl=scaling_impl,
@@ -187,7 +189,7 @@ def test_scaling_impls_called_once(inp, minifloat_format):
             exponent_bit_width_impl=exponent_bit_width_impl,
             mantissa_bit_width_impl=mantissa_bit_width_impl,
             exponent_bias_impl=exponent_bias_impl,
-            pre_computed_max_mantissa=ComputeMaxMantissa(),
+            compute_max_mantissa=ComputeMaxMantissa(),
             signed=signed,
             input_view_impl=Identity(),
             scaling_impl=scaling_impl,
@@ -225,7 +227,7 @@ def test_inner_scale(inp, minifloat_format, scale):
                 exponent_bit_width_impl=exponent_bit_width_impl,
                 mantissa_bit_width_impl=mantissa_bit_width_impl,
                 exponent_bias_impl=exponent_bias_impl,
-                pre_computed_max_mantissa=ComputeMaxMantissa(),
+                compute_max_mantissa=ComputeMaxMantissa(),
                 signed=signed,
                 input_view_impl=Identity(),
                 scaling_impl=scaling_impl,
@@ -243,7 +245,7 @@ def test_inner_scale(inp, minifloat_format, scale):
             exponent_bit_width_impl=exponent_bit_width_impl,
             mantissa_bit_width_impl=mantissa_bit_width_impl,
             exponent_bias_impl=exponent_bias_impl,
-            pre_computed_max_mantissa=ComputeMaxMantissa(),
+            compute_max_mantissa=ComputeMaxMantissa(),
             signed=signed,
             input_view_impl=Identity(),
             scaling_impl=scaling_impl,
@@ -252,7 +254,7 @@ def test_inner_scale(inp, minifloat_format, scale):
 
         # scale inp manually
         scaled_inp = inp / scale
-        max_mantissa = compute_max_mantissa(torch.tensor(mantissa_bit_width))
+        max_mantissa = compute_max_mantissa(torch.tensor(float(mantissa_bit_width)))
         max_val = max_float(
             torch.tensor(exponent_bit_width), max_mantissa, torch.tensor(exponent_bias))
         max_available_float = float_clamp.max_available_float
@@ -316,7 +318,7 @@ def test_valid_float_values(minifloat_format_and_value):
         exponent_bit_width_impl=exponent_bit_width_impl,
         mantissa_bit_width_impl=mantissa_bit_width_impl,
         exponent_bias_impl=exponent_bias_impl,
-        pre_computed_max_mantissa=ComputeMaxMantissa(),
+        compute_max_mantissa=ComputeMaxMantissa(),
         signed=signed,
         input_view_impl=Identity(),
         scaling_impl=scaling_impl,
