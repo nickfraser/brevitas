@@ -1,5 +1,5 @@
 dependencies==2.0.1
-numpy<=1.26.4
+numpy
 packaging
 setuptools<70.0
 sympy
