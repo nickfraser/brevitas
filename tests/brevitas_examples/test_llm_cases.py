@@ -4,12 +4,10 @@
 import pytest_cases
 
 from tests.brevitas_examples.common import process_args_and_metrics
-from tests.marker import requires_pt_ge
 
 
 class LLMRunCases:
 
-    @requires_pt_ge('2.3')
     @pytest_cases.parametrize(
         "run_dict",
         [
@@ -46,6 +44,7 @@ class LLMRunCases:
             {"rotation": "layerwise"},
             {"rotation": "fx", "ln_affine_merge": True, "replace_rmsnorm": True, "convert_layernorm_to_rmsnorm": True},
             {"rotation": "fused_no_fx", "replace_rmsnorm": True},
+            {"rotation": "layerwise", "act_equalization": "layerwise", "convert_layernorm_to_rmsnorm": True},
             {"act_equalization": "fx", "gptq": True},
             {"quant_sdpa": "fx", "input_scale_type": "dynamic", "input_quant_granularity": "per_row"},
             {"quant_sdpa": "functional", "input_scale_type": "dynamic", "input_quant_granularity": "per_row"},
@@ -76,6 +75,7 @@ class LLMRunCases:
             "rotation=layerwise",
             "rotation=fx",
             "rotation=fused_no_fx",
+            "rotation=layerwise,act_equalization=layerwise,convert_layernorm_to_rmsnorm=True",
             "act_equalization=fx,gptq=True",
             "quant_sdpa_fx_per_row",
             "quant_sdpa_functional_per_row",
@@ -161,7 +161,6 @@ class LLMPerplexityCases:
     def case_small_models_learned_round_ppl(self, run_dict, default_run_args, request):
         yield process_args_and_metrics(default_run_args, run_dict, extra_keys=LLMPerplexityCases.METRICS)
 
-    @requires_pt_ge('2.4')
     @pytest_cases.parametrize(
         "run_dict",
         [
@@ -526,7 +525,6 @@ class LLMQuantLayerCountCases:
 
 class LLMRotationOptimizationCases:
 
-    @requires_pt_ge('2.4')
     @pytest_cases.parametrize(
         "run_dict",
             [
