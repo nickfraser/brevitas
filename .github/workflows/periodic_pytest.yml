@@ -2,7 +2,7 @@ name: Pytest
 
 on:
   schedule:
-  - cron: '0 0 * * 5' # 12:00am UTC every Friday
+  - cron: '37 19 * * 4' # 7:37am UTC every Thursday
 
 jobs:
   build:
