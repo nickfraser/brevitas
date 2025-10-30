@@ -2,7 +2,7 @@ name: Test Brevitas-ORT integration
 
 on:
   schedule:
-  - cron: '0 0 * * 4' # 12:00am UTC every Thursday
+  - cron: '0 0 * * 5' # 12:00am UTC every Friday
 
 jobs:
   build:

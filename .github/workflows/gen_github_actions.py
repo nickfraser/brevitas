@@ -81,6 +81,7 @@ ALL_SUPPORTED_PYTORCH_VERSIONS = (
     '2.7.1',
     '2.8.0',
     '2.9.0')
+
 PYTHON_VERSIONS = ('3.10', '3.11')
 
 PYTORCH_VERSIONS = ('2.2.2', '2.3.1', '2.4.1', '2.5.1', '2.6.0', '2.7.1')
