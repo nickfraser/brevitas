@@ -10,12 +10,12 @@ from packaging import version
 from packaging.version import parse
 
 sys.path.append(os.path.join(os.path.dirname(__file__), os.path.join('.', '.github', 'workflows')))
+from gen_github_actions import ALL_SUPPORTED_PYTHON_VERSIONS as PYTHON_VERSIONS
+from gen_github_actions import ALL_SUPPORTED_PYTORCH_VERSIONS as PYTORCH_VERSIONS
 from gen_github_actions import EXAMPLES_DIFFUSION_PYTEST_PYTORCH_VERSIONS
 from gen_github_actions import EXAMPLES_LLM_PYTEST_PYTORCH_VERSIONS
 from gen_github_actions import EXAMPLES_VISION_PYTEST_PYTORCH_VERSIONS
 from gen_github_actions import JIT_STATUSES
-from gen_github_actions import PYTHON_VERSIONS
-from gen_github_actions import PYTORCH_VERSIONS
 from gen_github_actions import TORCHVISION_VERSION_DICT
 
 IS_OSX = system() == 'Darwin'
