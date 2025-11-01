@@ -2,7 +2,7 @@ name: Test End-to-end flows
 
 on:
   schedule:
-  - cron: '37 19 * * 5' # 7:37am UTC every Friday
+  - cron: '07 16 * * 6' # 4:07pm UTC every Saturday
 
 jobs:
   build:
