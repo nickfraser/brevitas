@@ -90,4 +90,4 @@ def test_brevitas_avg_pool_export(
     atol = 1e-8
     assert np.isclose(ref_output_array, finn_output, atol=atol).all()
     # cleanup
-    rm_onnx(export_path)
+    #rm_onnx(export_path)
